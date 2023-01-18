@@ -429,20 +429,28 @@ class Game:
     def run(self) -> None:
         """Game cycle"""
         self.roundCounter = 0
+        end_code = None #0:round over, 1:playerX, 2:playerO
         while True:
             if not self.addRount():
-                self.printTheEnd('Rounds Are Over')
+                end_code = 0
                 break
             elif self.playerX.runTurn(self.roundCounter):
-                self.printTheEnd(f'Player {self.playerX.identifier} Won')
+                end_code = 1
                 break
 
             if not self.addRount():
-                self.printTheEnd('Rounds Are Over')
+                end_code = 0
                 break
             elif self.playerO.runTurn(self.roundCounter):
-                self.printTheEnd(f'Player {self.playerO.identifier} Won')
+                end_code = 2
                 break
+        if end_code==0:
+            self.printTheEnd('Rounds Are Over')
+        elif end_code==1:
+            self.printTheEnd(f'Player {self.playerX.identifier} Won')
+        else:
+            self.printTheEnd(f'Player {self.playerO.identifier} Won')
+            
 
 
 #--- EXECUTION ---#
